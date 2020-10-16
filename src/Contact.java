@@ -23,4 +23,11 @@ public class Contact {
         this.name = newName;
     }
 
+    public String userNameNumber () {
+        //return this.name + " | " + this.phoneNumber;
+        return this.getName() + " | " + this.getPhoneNumber();
+    }
+
+
+
 }
