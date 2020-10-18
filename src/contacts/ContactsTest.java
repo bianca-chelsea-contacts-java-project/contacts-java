@@ -74,7 +74,7 @@ public class ContactsTest {
                     break;
                 case 6:
                     //Update an existing contact
-                    ContactsIO.updateContact(dataFilePath, ContactsIO.userNameInput(), ContactsIO.userNumInput());
+                    ContactsIO.updateContact(dataFilePath, ContactsIO.userNameInput(), ContactsIO.userNameInput());
                     break;
                 case 7:
                     //Exit

@@ -50,9 +50,10 @@ public class ContactsIO {
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
         for (String item: fileContents) {
-            if(item.equals(oldValue)) {
+            if(item.toLowerCase().contains(oldValue.toLowerCase())) {
                 //Add my modified item.
-                modifiedList.add(newValue);
+                String[] tokens= item.split(" ");
+                modifiedList.add(newValue + " | " + tokens[2]);
             } else {
                 //Add the existing because it isn't what we want to replace.
                 modifiedList.add(item);
@@ -60,6 +61,12 @@ public class ContactsIO {
         }
         Files.write(filePath, modifiedList);
     }
+    // take the line that contains old value
+//split that line by "|"
+//to seperate name from number
+//name and number get stored in array of strings String[] token
+//then add newValue + String[1] token
+
 
     //add contacts
     public static void addNamesAndNumbers (Path dataFilePath, String newName, String newNumber) throws IOException {
@@ -133,3 +140,4 @@ public class ContactsIO {
     }
 
 }
+
