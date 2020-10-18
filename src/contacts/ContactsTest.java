@@ -8,29 +8,13 @@ import java.util.Scanner;
 
 public class ContactsTest {
     public static void main(String[] args) throws IOException {
-        System.out.println("Welcome to the ...");
-        System.out.println("\n" +
-                " ██████╗ ██████╗ ███╗   ██╗████████╗ █████╗  ██████╗████████╗    ██╗     ██╗███████╗████████╗\n" +
-                "██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔══██╗██╔════╝╚══██╔══╝    ██║     ██║██╔════╝╚══██╔══╝\n" +
-                "██║     ██║   ██║██╔██╗ ██║   ██║   ███████║██║        ██║       ██║     ██║███████╗   ██║   \n" +
-                "██║     ██║   ██║██║╚██╗██║   ██║   ██╔══██║██║        ██║       ██║     ██║╚════██║   ██║   \n" +
-                "╚██████╗╚██████╔╝██║ ╚████║   ██║   ██║  ██║╚██████╗   ██║       ███████╗██║███████║   ██║   \n" +
-                " ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝╚═╝╚══════╝   ╚═╝  ");
 
-        System.out.println("\n" +
-                "1. View contacts.\n" +
-                "2. Add a new contact.\n" +
-                "3. Search a contact by name.\n" +
-                "4. Search a contact by number.\n" +
-                "5. Delete an existing contact.\n" +
-                "6. Update existing contact.\n" +
-                "7. Exit.\n" +
-                "Enter an option (1, 2, 3, 4, 5, 6, or 7):\n");
 
         //Generate Scanner for users inputs
         Scanner scan = new Scanner(System.in);
 
-        int userSelection = Integer.parseInt(scan.nextLine().trim());
+
+
         //System.out.println();
 //        System.out.println("Please enter a name");
 //        String userNameInput = scan.nextLine().trim();
@@ -45,7 +29,27 @@ public class ContactsTest {
         Path dataFilePath = ContactsIO.createDirectoryAndFile(directoryName, fileName);
         Path modifiedDataFilePath = ContactsIO.createDirectoryAndFile(directoryName, modifiedFileName);
 
+
         do {
+            System.out.println("Welcome to the ...");
+            System.out.println("\n" +
+                    " ██████╗ ██████╗ ███╗   ██╗████████╗ █████╗  ██████╗████████╗    ██╗     ██╗███████╗████████╗\n" +
+                    "██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔══██╗██╔════╝╚══██╔══╝    ██║     ██║██╔════╝╚══██╔══╝\n" +
+                    "██║     ██║   ██║██╔██╗ ██║   ██║   ███████║██║        ██║       ██║     ██║███████╗   ██║   \n" +
+                    "██║     ██║   ██║██║╚██╗██║   ██║   ██╔══██║██║        ██║       ██║     ██║╚════██║   ██║   \n" +
+                    "╚██████╗╚██████╔╝██║ ╚████║   ██║   ██║  ██║╚██████╗   ██║       ███████╗██║███████║   ██║   \n" +
+                    " ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝   ╚═╝       ╚══════╝╚═╝╚══════╝   ╚═╝  ");
+
+            System.out.println("\n" +
+                    "1. View contacts.\n" +
+                    "2. Add a new contact.\n" +
+                    "3. Search a contact by name.\n" +
+                    "4. Search a contact by number.\n" +
+                    "5. Delete an existing contact.\n" +
+                    "6. Update existing contact.\n" +
+                    "7. Exit.\n" +
+                    "Enter an option (1, 2, 3, 4, 5, 6, or 7):\n");
+            int userSelection = Integer.parseInt(scan.nextLine().trim());
             switch (userSelection) {
                 case 1:
                     //View contact list

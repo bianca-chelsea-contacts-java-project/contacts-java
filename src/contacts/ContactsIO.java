@@ -87,7 +87,8 @@ public class ContactsIO {
         List<String> modifiedList = new ArrayList<>();
         for (String item: fileContents) {
             //I want to remove the bread from the list.
-            if(!item.contains(line)) {
+            if(!item.toLowerCase().contains(line.toLowerCase())) {
+                System.out.println("Successfully deleted!");
                 modifiedList.add(item);
             }
         }
@@ -101,8 +102,8 @@ public class ContactsIO {
         for (String item: fileContents) {
             //System.out.println("item = " + item);
             //If contains the item, input into the new modified list
-            if(item.contains(userSearch)) {
-                //System.out.println("item = " + item);
+            if(item.toLowerCase().contains(userSearch.toLowerCase())) {
+                System.out.println(item);
                 modifiedList.add(item);
             }
         }
