@@ -2,6 +2,8 @@ package contacts;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class ContactsTest {
@@ -30,42 +32,45 @@ public class ContactsTest {
 
         int userSelection = Integer.parseInt(scan.nextLine().trim());
         //System.out.println();
-        System.out.println("Please enter a name");
-        String userNameInput = scan.nextLine().trim();
-        System.out.println("Please enter a number");
-        String userNumInput = scan.nextLine().trim();
+//        System.out.println("Please enter a name");
+//        String userNameInput = scan.nextLine().trim();
+//        System.out.println("Please enter a number");
+//        String userNumInput = scan.nextLine().trim();
         boolean keepGoing = true;
 
         String directoryName = "data";
-        String fileName = "contacts1.txt";
+        String fileName = "contacts.txt";
+        String modifiedFileName = "contacts1.txt";
 
         Path dataFilePath = ContactsIO.createDirectoryAndFile(directoryName, fileName);
+        Path modifiedDataFilePath = ContactsIO.createDirectoryAndFile(directoryName, modifiedFileName);
 
         do {
             switch (userSelection) {
                 case 1:
                     //View contact list
+
                     ContactsIO.printFileContents(dataFilePath);
                     break;
                 case 2:
                     //Add a new contact
-                    ContactsIO.addNamesAndNumbers(dataFilePath, userNameInput, userNumInput);
+                    ContactsIO.addNamesAndNumbers(dataFilePath, ContactsIO.userNameInput(), ContactsIO.userNumInput());
                     break;
                 case 3:
                     //Search a contact by name
-                    ContactsIO.searchContact(dataFilePath, userNameInput);
+                    ContactsIO.searchContact(dataFilePath, modifiedDataFilePath, ContactsIO.userNameInput());
                     break;
                 case 4:
                     //Search a contact by number
-                    ContactsIO.searchContact(dataFilePath, userNumInput);
+                    ContactsIO.searchContact(dataFilePath, modifiedDataFilePath, ContactsIO.userNumInput());
                     break;
                 case 5:
                     //Delete an existing contact
-                    ContactsIO.deleteContact(dataFilePath, userNameInput);
+                    ContactsIO.deleteContact(dataFilePath, ContactsIO.userNameInput());
                     break;
                 case 6:
                     //Update an existing contact
-                    ContactsIO.updateContact(dataFilePath, userNameInput, userNameInput);
+                    ContactsIO.updateContact(dataFilePath, ContactsIO.userNameInput(), ContactsIO.userNumInput());
                     break;
                 case 7:
                     //Exit

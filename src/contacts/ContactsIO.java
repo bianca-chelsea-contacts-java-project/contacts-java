@@ -37,6 +37,7 @@ public class ContactsIO {
     public static void printFileContents(Path filePath) throws IOException {
         System.out.println();
         List<String> fileContents = Files.readAllLines(filePath);
+        System.out.println("Name | Phone number");
         for (int i = 0; i < fileContents.size(); i++) {
             System.out.printf("%s \n",fileContents.get(i));
         }
@@ -94,7 +95,7 @@ public class ContactsIO {
     }
 
     //search contacts method
-    public static void searchContact (Path filePath, String userSearch) throws IOException{
+    public static void searchContact (Path filePath, Path modifiedDataFilePath, String userSearch) throws IOException{
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
         for (String item: fileContents) {
@@ -105,15 +106,29 @@ public class ContactsIO {
                 modifiedList.add(item);
             }
         }
-        Files.write(filePath, modifiedList);
+        Files.write(modifiedDataFilePath, modifiedList);
     }
 
-    public static void userInput () {
+//    public static void userInput () {
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println("Enter contact name: ");
+//        String userInput = sc.nextLine().trim();
+//        System.out.println("Enter contact number: ");
+//        String userNumber = sc.nextLine().trim();
+//    }
+
+    public static String userNameInput () {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter new contact name: ");
+        System.out.println("Enter contact name: ");
         String userInput = sc.nextLine().trim();
-        System.out.println("Enter new contact number: ");
+        return userInput;
+    }
+
+    public static String userNumInput () {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter contact number: ");
         String userNumber = sc.nextLine().trim();
+        return userNumber;
     }
 
 }
