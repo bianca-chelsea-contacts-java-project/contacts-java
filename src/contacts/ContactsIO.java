@@ -44,7 +44,7 @@ public class ContactsIO {
 
     //update contacts
     //update the contacts lists
-    public static void updateLine(Path filePath, String oldValue, String newValue) throws IOException {
+    public static void updateContact(Path filePath, String oldValue, String newValue) throws IOException {
         //Replace a line in the file.
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
@@ -80,7 +80,7 @@ public class ContactsIO {
     }
 
     //delete contacts
-    public static void deleteLine(Path filePath, String line) throws IOException {
+    public static void deleteContact(Path filePath, String line) throws IOException {
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
         for (String item: fileContents) {
