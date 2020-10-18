@@ -28,4 +28,10 @@ public class Contacts1 {
     public String userNameNumber () {
         return this.getName() + " | " + this.getPhoneNumber() + " | ";
     }
+
+    //This is meant as a formatting the string with the automatic sizing
+//    public void userNameNumber () {
+//        System.out.printf("%-10s | %-12s |", this.getName(), this.getPhoneNumber());
+//    }
+
 }

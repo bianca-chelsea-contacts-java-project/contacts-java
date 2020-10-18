@@ -74,8 +74,9 @@ public class ContactsIO {
         Contacts1 newUser = new Contacts1(newName, newNumber);
         String [] testUser = {newUser.userNameNumber()};
 
-        System.out.println(newUser.userNameNumber());
+        //System.out.println(newUser.userNameNumber());
         Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
+        //Files.write(dataFilePath, Arrays.asList(newUser.userNameNumber()), StandardOpenOption.APPEND);
         ContactsIO.printFileContents(dataFilePath);
     }
 
@@ -100,7 +101,7 @@ public class ContactsIO {
             //System.out.println("item = " + item);
             //If contains the item, input into the new modified list
             if(item.contains(userSearch)) {
-                System.out.println("item = " + item);
+                //System.out.println("item = " + item);
                 modifiedList.add(item);
             }
         }

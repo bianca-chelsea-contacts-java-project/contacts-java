@@ -28,8 +28,11 @@ public class ContactsTest {
         //Generate Scanner for users inputs
         Scanner scan = new Scanner(System.in);
 
-        int userSelection = scan.nextInt();
+        int userSelection = Integer.parseInt(scan.nextLine().trim());
+        //System.out.println();
+        System.out.println("Please enter a name");
         String userNameInput = scan.nextLine().trim();
+        System.out.println("Please enter a number");
         String userNumInput = scan.nextLine().trim();
         boolean keepGoing = true;
 
@@ -46,8 +49,6 @@ public class ContactsTest {
                     break;
                 case 2:
                     //Add a new contact
-                    System.out.println("Please enter a name.");
-                    System.out.println("Please enter a number");
                     ContactsIO.addNamesAndNumbers(dataFilePath, userNameInput, userNumInput);
                     break;
                 case 3:
@@ -71,14 +72,14 @@ public class ContactsTest {
                     System.out.println("Thank you!!");
                     System.exit(0);
                 default:
-                    System.err.println("Please enter a number between 1 - 5!");
+                    System.err.println("Please enter a number between 1 - 7!");
                     break;
             }
 
             System.out.println("Do want to chose another option? [y/n]");
             String userResponse = scan.nextLine().trim();
 
-            if (!userResponse.equalsIgnoreCase("y") || !userResponse.equalsIgnoreCase("yes")) {
+            if (!userResponse.equalsIgnoreCase("y")) {
                 keepGoing = false;
             }
         } while (keepGoing);
