@@ -85,29 +85,29 @@ public class ContactsIO {
 //name and number get stored in array of strings String[] token
 //then add newValue + String[1] token
 
-    public static void checkNames(Path dataFilePath, Path modifiedFileName, String newName, String newNumber) throws IOException {
+    public static Boolean checkNames(Path dataFilePath, Path modifiedFileName, String newName, String newNumber) throws IOException {
         Scanner sc = new Scanner(System.in);
         List<String> fileContents = Files.readAllLines(dataFilePath);
 
-        boolean userConfirmation;
+        boolean userConfirmation = false;
 
+        //iterating through the lines in contacts.txt
         for (String item : fileContents) {
-            if (item.toLowerCase().contains(newName.toLowerCase())){
+            //if the line(item) contains the name input by user
+            if (item.toLowerCase().contains(newName.toLowerCase())) {
+                // then ask user if they want to overwrite
                 System.out.println("There's already a contact named " + item + ". Do you want to overwrite it? [Yes/No]");
                 String userInput = sc.nextLine().trim();
                 userConfirmation = userInput.equalsIgnoreCase("yes");
-            } else {
-                addNamesAndNumbers(dataFilePath, newName, newNumber);
-                return;
+                //if the user agrees to overwrite, program updates that contact info and terminates this method
+                if (userConfirmation) {
+                    updateContactNum(dataFilePath, modifiedFileName, newName, newNumber);
+
+                }
             }
-            if (userConfirmation){
-                updateContactNum(dataFilePath, modifiedFileName, newName, newNumber);
-                return;
-            }
-
-
-
-
+        }
+        return userConfirmation;
+    }
 
 //            if (item.toLowerCase().contains(newName.toLowerCase())) {
 //                System.out.println("There's already a contact named " + item + ". Do you want to overwrite it? [Yes/No]");
@@ -126,28 +126,18 @@ public class ContactsIO {
 //                return;
 //            }
 
-        }
-        //addNamesAndNumbers(dataFilePath, newName, newNumber);
-    }
+
+    //addNamesAndNumbers(dataFilePath, newName, newNumber);
+
 
     //add contacts
-    public static void addNamesAndNumbers(Path dataFilePath, String newName, String newNumber) throws IOException {
+    public static void addNamesAndNumbers(Path dataFilePath, Path modifiedFileName, String newName, String newNumber) throws IOException {
 
-//        System.out.println("Enter new contact name: ");
-//        String userInput = sc.nextLine().trim();
-//        System.out.println("Enter new contact number: ");
-//        String userNumber = sc.nextLine().trim();
-//
-//        Contacts1 newUser = new Contacts1(userInput, userNumber);
-//        String [] testUser = {newUser.userNameNumber()};
-
-
-//        Contacts1 newUser = new Contacts1(newName, newNumber);
-//        String [] testUser = {newUser.userNameNumber()};
-        Contacts1 newUser = new Contacts1(newName, newNumber);
-        String[] testUser = {newUser.userNameNumber()};
-        Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
-
+        if (!checkNames(dataFilePath, modifiedFileName, newName, newNumber)) {
+            Contacts1 newUser = new Contacts1(newName, newNumber);
+            String[] testUser = {newUser.userNameNumber()};
+            Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
+        }
         ContactsIO.printFileContents(dataFilePath);
     }
 
@@ -164,11 +154,11 @@ public class ContactsIO {
         for (String item : fileContents) {
             //I want to remove the bread from the list.
             if (!item.toLowerCase().contains(line.toLowerCase())) {
-                System.out.println("Successfully deleted!");
                 modifiedList.add(item);
                 //fileContents.remove(item);
             }
         }
+        System.out.println("Successfully modified");
         Files.write(filePath, modifiedList);
     }
 
