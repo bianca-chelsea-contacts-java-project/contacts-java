@@ -71,7 +71,7 @@ public class ContactsTest {
                     break;
                 case 5:
                     //Delete an existing contact
-                    ContactsIO.deleteContact(dataFilePath, modifiedDataFilePath, ContactsIO.userNameInput());
+                    ContactsIO.deleteContact(dataFilePath, ContactsIO.userNameInput());
                     break;
                 case 6:
                     //Update an existing contact

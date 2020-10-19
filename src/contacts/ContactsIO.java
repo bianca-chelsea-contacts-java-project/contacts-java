@@ -62,7 +62,7 @@ public class ContactsIO {
         Files.write(filePath, modifiedList);
     }
 
-    public static void updateContactNum(Path filePath,Path modifiedFileName, String oldValue, String newValue) throws IOException {
+    public static void updateContactNum(Path filePath, Path modifiedFileName, String oldValue, String newValue) throws IOException {
         //Replace a line in the file.
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
@@ -71,7 +71,7 @@ public class ContactsIO {
                 //Add my modified item.
                 String[] tokens = item.split(" ");
                 modifiedList.add(tokens[0] + " | " + newValue + " |");
-                deleteContact(filePath, modifiedFileName, item.toLowerCase());
+                deleteContact(filePath, item.toLowerCase());
             } else {
                 //Add the existing because it isn't what we want to replace.
                 modifiedList.add(item);
@@ -85,25 +85,49 @@ public class ContactsIO {
 //name and number get stored in array of strings String[] token
 //then add newValue + String[1] token
 
-    public static void checkNames(Path dataFilePath,Path modifiedFileName, String newName, String newNumber) throws IOException {
+    public static void checkNames(Path dataFilePath, Path modifiedFileName, String newName, String newNumber) throws IOException {
         Scanner sc = new Scanner(System.in);
         List<String> fileContents = Files.readAllLines(dataFilePath);
 
+        boolean userConfirmation;
+
         for (String item : fileContents) {
-            if (item.toLowerCase().contains(newName.toLowerCase())) {
+            if (item.toLowerCase().contains(newName.toLowerCase())){
                 System.out.println("There's already a contact named " + item + ". Do you want to overwrite it? [Yes/No]");
                 String userInput = sc.nextLine().trim();
-                if (userInput.equalsIgnoreCase("yes")) {
-//                    updateContact(dataFilePath, userInput, newName);
-                    updateContactNum(dataFilePath, modifiedFileName,newName, newNumber);
-                } else {
-                    System.out.println("Your contact won't be overwritten.");
-//                    addNamesAndNumbers(dataFilePath, newName, newNumber);
-                }
+                userConfirmation = userInput.equalsIgnoreCase("yes");
+            } else {
+                addNamesAndNumbers(dataFilePath, newName, newNumber);
+                return;
+            }
+            if (userConfirmation){
+                updateContactNum(dataFilePath, modifiedFileName, newName, newNumber);
+                return;
             }
 
+
+
+
+
+//            if (item.toLowerCase().contains(newName.toLowerCase())) {
+//                System.out.println("There's already a contact named " + item + ". Do you want to overwrite it? [Yes/No]");
+//                String userInput = sc.nextLine().trim();
+//                if (userInput.equalsIgnoreCase("yes")) {
+////                    updateContact(dataFilePath, userInput, newName);
+//                    updateContactNum(dataFilePath, modifiedFileName, newName, newNumber);
+//                    return;
+//                } else {
+//                    System.out.println("Your contact won't be overwritten.");
+//                    //addNamesAndNumbers(dataFilePath, newName, newNumber);
+//                    //return;
+//                }
+//            } else {
+//                addNamesAndNumbers(dataFilePath, newName, newNumber);
+//                return;
+//            }
+
         }
-        addNamesAndNumbers(dataFilePath, newName, newNumber);
+        //addNamesAndNumbers(dataFilePath, newName, newNumber);
     }
 
     //add contacts
@@ -133,17 +157,19 @@ public class ContactsIO {
 
 
     //delete contacts
-    public static void deleteContact(Path filePath, Path modifiedFilePath, String line) throws IOException {
+    public static void deleteContact(Path filePath, String line) throws IOException {
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
+
         for (String item : fileContents) {
             //I want to remove the bread from the list.
-            if (item.toLowerCase().contains(line.toLowerCase())) {
+            if (!item.toLowerCase().contains(line.toLowerCase())) {
                 System.out.println("Successfully deleted!");
                 modifiedList.add(item);
+                //fileContents.remove(item);
             }
         }
-        Files.write(modifiedFilePath, modifiedList);
+        Files.write(filePath, modifiedList);
     }
 
     //search contacts method
