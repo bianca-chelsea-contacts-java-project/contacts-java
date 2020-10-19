@@ -9,17 +9,9 @@ import java.util.Scanner;
 public class ContactsTest {
     public static void main(String[] args) throws IOException {
 
-
         //Generate Scanner for users inputs
         Scanner scan = new Scanner(System.in);
 
-
-
-        //System.out.println();
-//        System.out.println("Please enter a name");
-//        String userNameInput = scan.nextLine().trim();
-//        System.out.println("Please enter a number");
-//        String userNumInput = scan.nextLine().trim();
         boolean keepGoing = true;
 
         String directoryName = "data";
@@ -31,7 +23,7 @@ public class ContactsTest {
 
 
         do {
-            System.out.println("Welcome to the ...");
+            System.out.println("\nWelcome to the ...");
             System.out.println("\n" +
                     " ██████╗ ██████╗ ███╗   ██╗████████╗ █████╗  ██████╗████████╗    ██╗     ██╗███████╗████████╗\n" +
                     "██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔══██╗██╔════╝╚══██╔══╝    ██║     ██║██╔════╝╚══██╔══╝\n" +
@@ -53,7 +45,6 @@ public class ContactsTest {
             switch (userSelection) {
                 case 1:
                     //View contact list
-
                     ContactsIO.printFileContents(dataFilePath);
                     break;
                 case 2:

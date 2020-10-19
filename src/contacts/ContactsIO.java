@@ -37,23 +37,24 @@ public class ContactsIO {
     public static void printFileContents(Path filePath) throws IOException {
         System.out.println();
         List<String> fileContents = Files.readAllLines(filePath);
-        System.out.println("Name | Phone number");
+        System.out.println("Name      | Phone number  |");
+        System.out.println("---------------------------");
         for (int i = 0; i < fileContents.size(); i++) {
-            System.out.printf("%s \n", fileContents.get(i));
+            System.out.printf("%-25s \n", fileContents.get(i));
         }
     }
 
     //update contacts
-    //update the contacts lists
+    //update the contacts name
     public static void updateContact(Path filePath, String oldValue, String newValue) throws IOException {
         //Replace a line in the file.
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
         for (String item : fileContents) {
             if (item.toLowerCase().contains(oldValue.toLowerCase())) {
-                //Add my modified item.
+                //Add my modified item
                 String[] tokens = item.split(" ");
-                modifiedList.add(newValue + " | " + tokens[2]);
+                modifiedList.add(String.format("%-10s | %-15s|", newValue ,tokens[2]));
             } else {
                 //Add the existing because it isn't what we want to replace.
                 modifiedList.add(item);
@@ -62,6 +63,7 @@ public class ContactsIO {
         Files.write(filePath, modifiedList);
     }
 
+    //update contact number
     public static void updateContactNum(Path filePath, Path modifiedFileName, String oldValue, String newValue) throws IOException {
         //Replace a line in the file.
         List<String> fileContents = Files.readAllLines(filePath);
@@ -70,7 +72,7 @@ public class ContactsIO {
             if (item.toLowerCase().contains(oldValue.toLowerCase())) {
                 //Add my modified item.
                 String[] tokens = item.split(" ");
-                modifiedList.add(tokens[0] + " | " + newValue + " |");
+                modifiedList.add(String.format("%-10s | %-15s|", tokens[0] ,newValue));
                 deleteContact(filePath, item.toLowerCase());
             } else {
                 //Add the existing because it isn't what we want to replace.
@@ -79,11 +81,7 @@ public class ContactsIO {
         }
         Files.write(filePath, modifiedList);
     }
-    // take the line that contains old value
-//split that line by "|"
-//to seperate name from number
-//name and number get stored in array of strings String[] token
-//then add newValue + String[1] token
+
 
     public static Boolean checkNames(Path dataFilePath, Path modifiedFileName, String newName, String newNumber) throws IOException {
         Scanner sc = new Scanner(System.in);
@@ -109,41 +107,17 @@ public class ContactsIO {
         return userConfirmation;
     }
 
-//            if (item.toLowerCase().contains(newName.toLowerCase())) {
-//                System.out.println("There's already a contact named " + item + ". Do you want to overwrite it? [Yes/No]");
-//                String userInput = sc.nextLine().trim();
-//                if (userInput.equalsIgnoreCase("yes")) {
-////                    updateContact(dataFilePath, userInput, newName);
-//                    updateContactNum(dataFilePath, modifiedFileName, newName, newNumber);
-//                    return;
-//                } else {
-//                    System.out.println("Your contact won't be overwritten.");
-//                    //addNamesAndNumbers(dataFilePath, newName, newNumber);
-//                    //return;
-//                }
-//            } else {
-//                addNamesAndNumbers(dataFilePath, newName, newNumber);
-//                return;
-//            }
-
-
-    //addNamesAndNumbers(dataFilePath, newName, newNumber);
-
 
     //add contacts
     public static void addNamesAndNumbers(Path dataFilePath, Path modifiedFileName, String newName, String newNumber) throws IOException {
 
         if (!checkNames(dataFilePath, modifiedFileName, newName, newNumber)) {
             Contacts1 newUser = new Contacts1(newName, newNumber);
-            String[] testUser = {newUser.userNameNumber()};
+            String testUser = String.format("%-10s| %-14s|", newName , newNumber);
             Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
         }
         ContactsIO.printFileContents(dataFilePath);
     }
-
-    //System.out.println(newUser.userNameNumber());
-//        Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
-    //Files.write(dataFilePath, Arrays.asList(newUser.userNameNumber()), StandardOpenOption.APPEND);
 
 
     //delete contacts
@@ -152,10 +126,9 @@ public class ContactsIO {
         List<String> modifiedList = new ArrayList<>();
 
         for (String item : fileContents) {
-            //I want to remove the bread from the list.
+            //I want to remove the paramter line from the list
             if (!item.toLowerCase().contains(line.toLowerCase())) {
                 modifiedList.add(item);
-                //fileContents.remove(item);
             }
         }
         System.out.println("Successfully modified");
@@ -167,7 +140,6 @@ public class ContactsIO {
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
         for (String item : fileContents) {
-            //System.out.println("item = " + item);
             //If contains the item, input into the new modified list
             if (item.toLowerCase().contains(userSearch.toLowerCase())) {
                 System.out.println(item);
@@ -176,14 +148,6 @@ public class ContactsIO {
         }
         Files.write(modifiedDataFilePath, modifiedList);
     }
-
-//    public static void userInput () {
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println("Enter contact name: ");
-//        String userInput = sc.nextLine().trim();
-//        System.out.println("Enter contact number: ");
-//        String userNumber = sc.nextLine().trim();
-//    }
 
     public static String userNameInput() {
         Scanner sc = new Scanner(System.in);
