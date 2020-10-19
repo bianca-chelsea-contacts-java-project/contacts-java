@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class ContactsIO {
     //Scanner for the userInputs
-    Scanner scan = new Scanner (System.in);
+    Scanner scan = new Scanner(System.in);
     String userNameInput = scan.nextLine();
     String userNumInput = scan.nextLine();
 
@@ -39,7 +39,7 @@ public class ContactsIO {
         List<String> fileContents = Files.readAllLines(filePath);
         System.out.println("Name | Phone number");
         for (int i = 0; i < fileContents.size(); i++) {
-            System.out.printf("%s \n",fileContents.get(i));
+            System.out.printf("%s \n", fileContents.get(i));
         }
     }
 
@@ -49,11 +49,29 @@ public class ContactsIO {
         //Replace a line in the file.
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
-        for (String item: fileContents) {
-            if(item.toLowerCase().contains(oldValue.toLowerCase())) {
+        for (String item : fileContents) {
+            if (item.toLowerCase().contains(oldValue.toLowerCase())) {
                 //Add my modified item.
-                String[] tokens= item.split(" ");
+                String[] tokens = item.split(" ");
                 modifiedList.add(newValue + " | " + tokens[2]);
+            } else {
+                //Add the existing because it isn't what we want to replace.
+                modifiedList.add(item);
+            }
+        }
+        Files.write(filePath, modifiedList);
+    }
+
+    public static void updateContactNum(Path filePath,Path modifiedFileName, String oldValue, String newValue) throws IOException {
+        //Replace a line in the file.
+        List<String> fileContents = Files.readAllLines(filePath);
+        List<String> modifiedList = new ArrayList<>();
+        for (String item : fileContents) {
+            if (item.toLowerCase().contains(oldValue.toLowerCase())) {
+                //Add my modified item.
+                String[] tokens = item.split(" ");
+                modifiedList.add(tokens[0] + " | " + newValue + " |");
+                deleteContact(filePath, modifiedFileName, item.toLowerCase());
             } else {
                 //Add the existing because it isn't what we want to replace.
                 modifiedList.add(item);
@@ -67,10 +85,30 @@ public class ContactsIO {
 //name and number get stored in array of strings String[] token
 //then add newValue + String[1] token
 
+    public static void checkNames(Path dataFilePath,Path modifiedFileName, String newName, String newNumber) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        List<String> fileContents = Files.readAllLines(dataFilePath);
+
+        for (String item : fileContents) {
+            if (item.toLowerCase().contains(newName.toLowerCase())) {
+                System.out.println("There's already a contact named " + item + ". Do you want to overwrite it? [Yes/No]");
+                String userInput = sc.nextLine().trim();
+                if (userInput.equalsIgnoreCase("yes")) {
+//                    updateContact(dataFilePath, userInput, newName);
+                    updateContactNum(dataFilePath, modifiedFileName,newName, newNumber);
+                } else {
+                    System.out.println("Your contact won't be overwritten.");
+//                    addNamesAndNumbers(dataFilePath, newName, newNumber);
+                }
+            }
+
+        }
+        addNamesAndNumbers(dataFilePath, newName, newNumber);
+    }
 
     //add contacts
-    public static void addNamesAndNumbers (Path dataFilePath, String newName, String newNumber) throws IOException {
-//        Scanner sc = new Scanner(System.in);
+    public static void addNamesAndNumbers(Path dataFilePath, String newName, String newNumber) throws IOException {
+
 //        System.out.println("Enter new contact name: ");
 //        String userInput = sc.nextLine().trim();
 //        System.out.println("Enter new contact number: ");
@@ -79,37 +117,43 @@ public class ContactsIO {
 //        Contacts1 newUser = new Contacts1(userInput, userNumber);
 //        String [] testUser = {newUser.userNameNumber()};
 
-        Contacts1 newUser = new Contacts1(newName, newNumber);
-        String [] testUser = {newUser.userNameNumber()};
 
-        //System.out.println(newUser.userNameNumber());
+//        Contacts1 newUser = new Contacts1(newName, newNumber);
+//        String [] testUser = {newUser.userNameNumber()};
+        Contacts1 newUser = new Contacts1(newName, newNumber);
+        String[] testUser = {newUser.userNameNumber()};
         Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
-        //Files.write(dataFilePath, Arrays.asList(newUser.userNameNumber()), StandardOpenOption.APPEND);
+
         ContactsIO.printFileContents(dataFilePath);
     }
 
+    //System.out.println(newUser.userNameNumber());
+//        Files.write(dataFilePath, Arrays.asList(testUser), StandardOpenOption.APPEND);
+    //Files.write(dataFilePath, Arrays.asList(newUser.userNameNumber()), StandardOpenOption.APPEND);
+
+
     //delete contacts
-    public static void deleteContact(Path filePath, String line) throws IOException {
+    public static void deleteContact(Path filePath, Path modifiedFilePath, String line) throws IOException {
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
-        for (String item: fileContents) {
+        for (String item : fileContents) {
             //I want to remove the bread from the list.
-            if(!item.toLowerCase().contains(line.toLowerCase())) {
+            if (item.toLowerCase().contains(line.toLowerCase())) {
                 System.out.println("Successfully deleted!");
                 modifiedList.add(item);
             }
         }
-        Files.write(filePath, modifiedList);
+        Files.write(modifiedFilePath, modifiedList);
     }
 
     //search contacts method
-    public static void searchContact (Path filePath, Path modifiedDataFilePath, String userSearch) throws IOException{
+    public static void searchContact(Path filePath, Path modifiedDataFilePath, String userSearch) throws IOException {
         List<String> fileContents = Files.readAllLines(filePath);
         List<String> modifiedList = new ArrayList<>();
-        for (String item: fileContents) {
+        for (String item : fileContents) {
             //System.out.println("item = " + item);
             //If contains the item, input into the new modified list
-            if(item.toLowerCase().contains(userSearch.toLowerCase())) {
+            if (item.toLowerCase().contains(userSearch.toLowerCase())) {
                 System.out.println(item);
                 modifiedList.add(item);
             }
@@ -125,14 +169,14 @@ public class ContactsIO {
 //        String userNumber = sc.nextLine().trim();
 //    }
 
-    public static String userNameInput () {
+    public static String userNameInput() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter contact name: ");
         String userInput = sc.nextLine().trim();
         return userInput;
     }
 
-    public static String userNumInput () {
+    public static String userNumInput() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter contact number: ");
         String userNumber = sc.nextLine().trim();

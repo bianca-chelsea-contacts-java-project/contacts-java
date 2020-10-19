@@ -58,7 +58,8 @@ public class ContactsTest {
                     break;
                 case 2:
                     //Add a new contact
-                    ContactsIO.addNamesAndNumbers(dataFilePath, ContactsIO.userNameInput(), ContactsIO.userNumInput());
+                    ContactsIO.checkNames(dataFilePath,modifiedDataFilePath, ContactsIO.userNameInput(),ContactsIO.userNumInput());
+//                    ContactsIO.addNamesAndNumbers(dataFilePath, ContactsIO.userNameInput(), ContactsIO.userNumInput());
                     break;
                 case 3:
                     //Search a contact by name
@@ -70,7 +71,7 @@ public class ContactsTest {
                     break;
                 case 5:
                     //Delete an existing contact
-                    ContactsIO.deleteContact(dataFilePath, ContactsIO.userNameInput());
+                    ContactsIO.deleteContact(dataFilePath, modifiedDataFilePath, ContactsIO.userNameInput());
                     break;
                 case 6:
                     //Update an existing contact
