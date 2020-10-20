@@ -53,8 +53,8 @@ public class ContactsIO {
         for (String item : fileContents) {
             if (item.toLowerCase().contains(oldValue.toLowerCase())) {
                 //Add my modified item
-                String[] tokens = item.split(" ");
-                modifiedList.add(String.format("%-10s | %-15s|", newValue ,tokens[2]));
+                String[] tokens = item.split("\\|");
+                modifiedList.add(newValue + " | " + tokens[1]);
             } else {
                 //Add the existing because it isn't what we want to replace.
                 modifiedList.add(item);
@@ -71,8 +71,8 @@ public class ContactsIO {
         for (String item : fileContents) {
             if (item.toLowerCase().contains(oldValue.toLowerCase())) {
                 //Add my modified item.
-                String[] tokens = item.split(" ");
-                modifiedList.add(String.format("%-10s | %-15s|", tokens[0] ,newValue));
+                String[] tokens = item.split("\\|");
+                modifiedList.add(tokens[0] + " | " + newValue);
                 deleteContact(filePath, item.toLowerCase());
             } else {
                 //Add the existing because it isn't what we want to replace.
