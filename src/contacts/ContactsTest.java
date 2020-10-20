@@ -38,7 +38,7 @@ public class ContactsTest {
                     "3. Search a contact by name.\n" +
                     "4. Search a contact by number.\n" +
                     "5. Delete an existing contact.\n" +
-                    "6. Update existing contact.\n" +
+                    "6. Edit an existing contact name.\n" +
                     "7. Exit.\n" +
                     "Enter an option (1, 2, 3, 4, 5, 6, or 7):\n");
             int userSelection = Integer.parseInt(scan.nextLine().trim());
